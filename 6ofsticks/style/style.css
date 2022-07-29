@@ -1,0 +1,32 @@
+html, body {
+	background-color: #003802;
+	font-family: 'Oswald', ' Roboto', sans-serif;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+}
+
+.container {
+	position: relative;
+	background-color: blueviolet;
+	margin: 10px 10px 10px 10px;
+	height: 85%;
+}
+
+
+.playbutton {
+  	margin: 0;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	-ms-transform: translate(-50%, -50%);
+  	transform: translate(-50%, -50%);
+  	width: 50%;
+ 	height: 100%;
+	color: white;
+	background-color: #000000;
+	border: none;
+	font-family: 'Oswald', ' Roboto', sans-serif;
+	font-size: 120%;
+}
