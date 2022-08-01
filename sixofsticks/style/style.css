@@ -11,6 +11,15 @@ h1 {
 	color: #ffffff;
 }
 
+a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:visited {
+  color: #ffffff;
+}
+
 .container {
 	position: relative;
 	margin: 10px 10px 10px 10px;
@@ -28,6 +37,7 @@ h1 {
  	height: 100%;
 	color: white;
 	background-color: #000000;
+	background-size: cover;
 	border: none;
 	font-family: 'Oswald', ' Roboto', sans-serif;
 	font-size: 120%;
