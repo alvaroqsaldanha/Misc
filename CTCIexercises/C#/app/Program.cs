@@ -30,6 +30,58 @@ namespace CTCI
             }
         }
 
+        // Intersection
+        static LinkedListNode intersection(LinkedListNode head1, LinkedListNode head2) {
+            LinkedListNode temp1 = head1;
+            LinkedListNode temp2 = head2;
+            int length1 = 0;
+            int length2 = 0;
+            while (temp1 != null) {
+                length1++;
+                temp1 = temp1.next;
+            }
+            while (temp2 != null) {
+                length2++;
+                temp2 = temp2.next;
+            }
+            int diff = Math.Abs(length1 - length2);
+            temp1 = length1 > length2 ? head1 : head2;
+            temp2 = length1 > length2 ? head2 : head1;
+            for (int i = 0; i < diff; i++) {
+                temp1 = temp1.next;
+            }
+            while (temp1 != temp2) {
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            }
+            return temp1;
+        }
+
+        // Loop Detection
+        static LinkedListNode loopDetection(LinkedListNode head) {
+            if (head == null)
+                return null;
+            LinkedListNode slow = head;
+            LinkedListNode runner = head.next;
+            while (runner != null && runner.next != null) {
+                if (slow == runner) {
+                    break;
+                }
+                slow = slow.next;
+                runner = runner.next.next;
+            }
+            if (runner == null || runner.next == null) {
+                return null;
+            }
+            slow = head;
+            while (slow != runner) {
+                slow = slow.next;
+                runner = runner.next;
+            }
+            return slow;
+
+        }
+
         // Delete Middle Node
         static void deleteMiddleNode(LinkedListNode del) {
             LinkedListNode n = del;
