@@ -1,9 +1,11 @@
-import java.util.HashMap;
+import java.io.*;
+import java.util.*;
 
 class ex {
     
     public static void main(String args[]) {  
-      System.out.println(palindromepermutation("abcabc"));
+      stack b = new stack();
+      b.test();
     }
       
     // URLify
