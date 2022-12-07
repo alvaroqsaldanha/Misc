@@ -5,13 +5,9 @@ namespace CTCI
     class CTCI {         
         static void Main(string[] args)
         {
-            LinkedListNode head = new LinkedListNode(1);
-            head.insert(3);
-            head.insert(9);
-            head.insert(9);
-            head.insert(1);
-            Console.WriteLine(isPalindrome(head));
-            Console.WriteLine(isPalindromeRecursive(head));
+            int[] arr = {1,2,3,4,5,6,7,8};
+            TreeNode node = Trees.minimalTree(arr,0,arr.Length - 1);
+            Console.WriteLine(node.ToString());
         }
 
         static void deleteDups(LinkedListNode head) {
