@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 
 namespace CTCI
 {
@@ -7,7 +7,9 @@ namespace CTCI
         {
             int[] arr = {1,2,3,4,5,6,7,8};
             TreeNode node = Trees.minimalTree(arr,0,arr.Length - 1);
-            Console.WriteLine(node.ToString());
+            List<TreeLinkedListNode> lists = Trees.listOfDepths(node);
+            foreach (TreeLinkedListNode list in lists)
+                Console.WriteLine(list);
         }
 
         static void deleteDups(LinkedListNode head) {

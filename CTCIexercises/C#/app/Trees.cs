@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+using System.Collections;
 
 namespace CTCI
 {
 
     class TreeNode {
         int value;
-        TreeNode[] children;
+        public TreeNode[] children;
 
         public TreeNode(int value){
             this.value = value;
@@ -21,6 +21,10 @@ namespace CTCI
             this.children[index] = child;
         }
 
+        public int getValue() {
+            return this.value;
+        }
+
         public override string ToString(){
             string rtrn = this.value.ToString() + "\n";
             foreach (TreeNode child in this.children) {
@@ -30,6 +34,36 @@ namespace CTCI
             return rtrn;
         }
     }
+
+    class TreeLinkedListNode {
+
+        TreeNode node;
+        TreeLinkedListNode next;
+
+        public TreeLinkedListNode(TreeNode node) {
+            this.node =  node;
+            this.next = null;
+        }
+
+        public void setNext(TreeNode next) {
+            TreeLinkedListNode temp = this;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = new TreeLinkedListNode(next);
+        }
+
+        public override string ToString(){
+            string rtrn = "";
+            TreeLinkedListNode temp = this;
+            while (temp != null) {
+                rtrn += temp.node.getValue().ToString();
+                temp = temp.next;
+            }
+            return rtrn;
+        }
+    }
+
     class Trees {         
         
         static public TreeNode minimalTree(int[] arr,int start, int end) {
@@ -41,6 +75,27 @@ namespace CTCI
             root.addChild(minimalTree(arr,start,middle-1),0);
             root.addChild(minimalTree(arr,middle+1,end),1);
             return root;
+        }
+
+        static public void listOfDepthsAux(TreeNode root, List<TreeLinkedListNode> lists, int level) {
+            if (root == null) {
+                return;
+            }
+            if (level == lists.Count) {
+                TreeLinkedListNode list = new TreeLinkedListNode(root);
+                lists.Add(list);
+            }
+            else {
+                lists[level].setNext(root);
+            }
+            listOfDepthsAux(root.children[0],lists,level+1);
+            listOfDepthsAux(root.children[1],lists,level+1);
+        }
+
+        static public List<TreeLinkedListNode> listOfDepths(TreeNode root) {
+            List<TreeLinkedListNode> lists = new List<TreeLinkedListNode>();
+            listOfDepthsAux(root,lists,0);
+            return lists;
         }
     }
 }
