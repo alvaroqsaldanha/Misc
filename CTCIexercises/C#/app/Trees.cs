@@ -97,5 +97,9 @@ namespace CTCI
             listOfDepthsAux(root,lists,0);
             return lists;
         }
+
+        static public bool validateBST(TreeNode root) {
+            
+        }
     }
 }
