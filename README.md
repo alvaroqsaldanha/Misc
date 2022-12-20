@@ -1,2 +1,2 @@
 # Misc
-A collection of miscellaneous small projects.
+A collection of miscellaneous projects, ranging from graph optimization and path-finding algorithms to machine learning models implemented from scratch. 
