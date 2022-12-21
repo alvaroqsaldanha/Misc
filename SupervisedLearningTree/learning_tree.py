@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Grupo al023
-Student id #92416
-Student id #92473
-"""
-
 import numpy as np
 from copy import deepcopy
 from math import log2
