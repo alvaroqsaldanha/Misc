@@ -1,0 +1,28 @@
+{
+  "name": "Spotify Stats!",
+  "description": "Find out how you've been listening to music on spotify!",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage","identity"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+        "16": "images/vinyl16.png",
+        "32": "images/vinyl32.png",
+        "48": "images/vinyl48.png",
+        "128": "images/vinyl128.png"
+    },
+    "default_title": "Check your music recommendations for the day :)!"
+  },
+  "icons": {
+    "16": "images/vinyl16.png",
+    "32": "images/vinyl32.png",
+    "48": "images/vinyl48.png",
+    "128": "images/vinyl128.png"
+  }
+
+
+}
