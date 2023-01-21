@@ -105,8 +105,81 @@ namespace CTCI
             return true;
         }
 
+        /* String Compression: Implement a method to perform basic string compression using the counts 
+        of repeated characters. For example, the string aabcccccaaa would become a2blc5a3. If the 
+        "compressed" string would not become smaller than the original string, your method should return 
+        the original string. You can assume the string has only uppercase and lowercase letters (a - z). */
+        static string stringCompression(string str) {
+            StringBuilder sb = new StringBuilder();
+            int counter = 0;
+            for (int i = 0; i < str.Length; i++) {
+                if (i < -1 && str[i] == str[i+1]) {
+                    counter++;
+                }
+                else {
+                    sb.Append(str[i]);
+                    sb.Append(counter.ToString());
+                    counter = 0;
+                }
+            }
+            return str.Length > sb.Length ? sb.ToString() : str;
+        }
 
+        /* Rotate Matrix: Given an image represented by an NxN matrix, where each pixel in the image is 4 
+        bytes, write a method to rotate the image by 90 degrees. Can you do this in place? */
+        static int[][] rotateMatrix(int[][] mat){
+            int n = mat.Length;
+            for (int layer = 0; layer < n / 2; layer++) {
+                for (int i = layer; i < n - layer; i++) {
+                    int temp = mat[layer][i];
+                    mat[layer][i] = mat[n-i-1][layer];
+                    mat[n-i-1][layer] = mat[n-layer-1][n-i-1];
+                    mat[n-layer-1][n-i-1] = mat[i][n-layer-1];
+                    mat[i][n-layer-1] = temp;
+                }
+            }
+            return mat;
+        }
+
+        /* Zero Matrix: Write an algorithm such that if an element in an MxN matrix is 0, its entire row and 
+        column are set to 0 */
+        static void zeroMatrix(int[][] mat) {
+            int[] rows = new int[mat.Length];
+            int[] columns = new int[mat[0].Length]; 
+            List<Tuple<int,int>> pos = new List<Tuple<int,int>>();
+            for (int i = 0; i < mat.Length; i++) {
+                for (int j = 0; j < mat[0].Length; j++) {
+                    if (mat[i][j] == 0) {
+                        pos.Add(new Tuple<int,int>(i,j));
+                    }
+                }
+            }
+            foreach (Tuple<int,int> tup in pos) {
+                if (rows[tup.Item1] == 0) {
+                    for (int i = 0; i < mat[0].Length; i++) {
+                        mat[tup.Item1][i] = 0;
+                    }
+                    rows[tup.Item1] = 1;
+                }
+                if (columns[tup.Item2] == 0) {
+                    for (int i = 0; i < mat.Length; i++) {
+                        mat[i][tup.Item2] = 0;
+                    }
+                    columns[tup.Item2] = 1;
+                }
+            }
+        }
+
+        /* String Rotation: Assume you have a method isSubstring which checks if one word is a substring 
+        of another. Given two strings, 51 and 52, write code to check if 52 is a rotation of 51 using only one 
+        call to isSubstring (e.g., "waterbottle" is a rotation of"erbottlewat"). */
+        static bool stringRotation(string s1, string s2) {
+            if (s1.Length != s2.Length || s1.Length == 0 || s2.Length == 0) {
+                return false;
+            }
+            string concat = s1 + s2;
+            return concat.Contains(s1);
+        }
     }
-
 
 }
