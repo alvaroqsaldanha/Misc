@@ -6,7 +6,7 @@ namespace CTCI
     class CTCI {         
         static void Main(string[] args)
         {
-            Console.WriteLine(urlify("Mr John Smith    ",13));
+            Console.WriteLine(oneAway("pale","ply"));
         }
 
         // Is Unique: Implement an algorithm to determine if a string has all unique characters.
@@ -57,6 +57,52 @@ namespace CTCI
                 start--;
             }
             return sb.ToString();
+        }
+
+        /* Palindrome Permutation: Given a string, write a function to check if it is a permutation of 
+        a palindrome. A palindrome is a word or phrase that is the same forwards and backwards. A 
+        permutation is a rearrangement of letters. The palindrome does not need to be limited to just 
+        dictionary words. */
+        static bool palindromePermutation(string str1) {
+            int[] charCount = new int[128];
+            for (int i = 0; i < str1.Length; i++) {
+                charCount[(int)str1[i]]++;
+            }
+            int oddCheck = 0;
+            for (int i = 0; i < charCount.Length; i++) {
+                if (charCount[i] % 2 == 1 && oddCheck == 1) {
+                    return false;
+                }
+                else if (charCount[i] % 2 == 1) {
+                    oddCheck = 1;
+                }
+            }
+            return true;
+        }
+
+        /* One Away: There are three types of edits that can be performed on strings: insert a character, 
+        remove a character, or replace a character. Given two strings, write a function to check if they are 
+        one edit (or zero edits) away */
+        static bool oneAway(string str1, string str2) {
+            if (Math.Abs(str1.Length - str2.Length) > 1) return false;
+            int[] count = new int[128];
+            string lstr = str1.Length >= str2.Length ? str1 : str2;
+            string sstr = str1.Length >= str2.Length ? str2 : str1;
+
+            for (int i = 0; i < sstr.Length; i++) {
+                count[(int) sstr[i]]++;
+            }
+
+            int checkIrregular = 0;
+            for (int i = 0; i < lstr.Length; i++) {
+                if (count[(int) lstr[i]] == 0 && checkIrregular == 1) {
+                    return false;
+                }
+                else if (count[(int) lstr[i]] == 0) {
+                    checkIrregular = 1;
+                }
+            }            
+            return true;
         }
 
 
