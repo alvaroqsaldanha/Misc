@@ -117,16 +117,12 @@ namespace CTCI
             ListNode runner = head;
             ListNode slow = head;
             Stack<int> keep = new Stack<int>();
-            while (runner.next != null && runner.next.next != null) {
+            while (runner != null && runner.next != null) {
                 runner = runner.next.next;
                 slow = slow.next;
                 keep.Push(slow.val);
             }
-            if (runner.next == null) {
-                slow = slow.next;
-            }
-            else {
-                keep.Push(slow.val);
+            if (runner != null) {
                 slow = slow.next;
             }
             while (slow != null) {
@@ -136,6 +132,43 @@ namespace CTCI
                 slow = slow.next;
             }
             return true;
+        }
+
+        /* Intersection: Given two (singly) linked lists, determine if the two lists intersect. Return the 
+        intersecting node. Note that the intersection is defined based on reference, not value. That is, if the 
+        kth node of the first linked list is the exact same node (by reference) as the jth node of the second 
+        linked list, then they are intersecting. */
+        static ListNode intersection(ListNode head1, ListNode head2) {
+            ListNode temp1 = head1;
+            ListNode temp2 = head2;
+            int length1 = 0;
+            int length2 = 0;
+            while (temp1.next != null || temp2.next != null) {
+                if (temp1.next !=  null) {
+                    temp1 = temp1.next;
+                    length1++;
+                }
+                if (temp2.next !=  null) {
+                    temp2 = temp2.next;
+                    length2++;
+                }
+            }
+            if (temp1 != temp2) return null;
+            ListNode shortlist = length1 > length2 ? head2 : head1;
+            ListNode longlist = length1 > length2 ? head1 : head2;
+
+            int diff = Math.Abs(length2 - length1);
+            for (int i = 0; i < diff; i++) {
+                longlist = longlist.next;
+            }
+
+            while (longlist != shortlist) {
+                longlist = longlist.next;
+                shortlist = shortlist.next;
+            }
+
+            return longlist;
+
         }
 
 
