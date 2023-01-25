@@ -168,8 +168,26 @@ namespace CTCI
             }
 
             return longlist;
-
         }
+
+        static ListNode loopDetection(ListNode head) {
+            if (head == null) return null;
+            ListNode slow = head;
+            ListNode runner = head;
+            while (slow != runner && runner != null && runner.next != null) {
+                slow = slow.next;
+                runner = runner.next;
+            }
+            if (runner == null || runner.next == null) return null;
+            runner = head;
+            while (slow != head) {
+                slow = slow.next;
+                runner = runner.next;
+            }
+            return slow;
+        }
+
+
 
 
     }
