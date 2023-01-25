@@ -170,6 +170,8 @@ namespace CTCI
             return longlist;
         }
 
+        /* Loop Detection: Given a circular linked list, implement an algorithm that returns the node at the 
+        beginning of the loop */
         static ListNode loopDetection(ListNode head) {
             if (head == null) return null;
             ListNode slow = head;
@@ -186,9 +188,6 @@ namespace CTCI
             }
             return slow;
         }
-
-
-
 
     }
 
