@@ -5,6 +5,7 @@ namespace CTCI
     public class TreeNode {         
         private int _value;
         private List<TreeNode> _children;
+        private TreeNode _parent;
 
         public TreeNode(int val) {
             _value = val;
@@ -23,6 +24,12 @@ namespace CTCI
         {
             get { return _children; }
             set { _children = value; }
+        }
+
+        public List<TreeNode> parent
+        {
+            get { return _parent; }
+            set { _parent = value; }
         }
 
         public void insertChild(TreeNode node) {

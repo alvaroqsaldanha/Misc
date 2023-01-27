@@ -94,5 +94,35 @@ namespace CTCI
             }
             return Math.Max(left,right) + 1;
         }
+
+        /* Validate BST: Implement a function to check if a binary tree is a binary search tree. */
+        static bool validateBST(TreeNode root) {
+            return validadeBSTHelper(root,Int32.MinValue,Int32.MaxValue);
+        }
+
+        static bool validateBSTHelper(TreeNode node, int l, int r) {
+            if (node == null) return true;
+            if (node.value < l || node.value > r)  {
+                return false;
+            }
+            return validateBST(node.left,l,node.value) && validateBSTHelper(node.right,node.value,r);
+        }
+
+        /* Successor: Write an algorithm to find the "next" node (i.e., in-order successor) of a given node in a 
+        binary search tree. You may assume that each node has a link to its parent. */
+        static TreeNode successor(TreeNode node) {
+            if (node == null) return null;
+            if (node.children[1] != null) {
+                node = node.right;
+                while(node.children[0] != null) {
+                    node = node.left;
+                }
+                return node;
+            }
+            while (node.parent != null && node != node.parent.children[0]) {
+                node = node.parent;
+            }
+            return node;
+        }
     }
 }
