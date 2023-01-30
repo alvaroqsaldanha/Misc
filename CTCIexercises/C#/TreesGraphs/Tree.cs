@@ -26,7 +26,7 @@ namespace CTCI
             set { _children = value; }
         }
 
-        public List<TreeNode> parent
+        public TreeNode parent
         {
             get { return _parent; }
             set { _parent = value; }

@@ -97,7 +97,7 @@ namespace CTCI
 
         /* Validate BST: Implement a function to check if a binary tree is a binary search tree. */
         static bool validateBST(TreeNode root) {
-            return validadeBSTHelper(root,Int32.MinValue,Int32.MaxValue);
+            return validateBSTHelper(root,Int32.MinValue,Int32.MaxValue);
         }
 
         static bool validateBSTHelper(TreeNode node, int l, int r) {
@@ -105,7 +105,7 @@ namespace CTCI
             if (node.value < l || node.value > r)  {
                 return false;
             }
-            return validateBST(node.left,l,node.value) && validateBSTHelper(node.right,node.value,r);
+            return validateBSTHelper(node.children[0],l,node.value) && validateBSTHelper(node.children[1],node.value,r);
         }
 
         /* Successor: Write an algorithm to find the "next" node (i.e., in-order successor) of a given node in a 
@@ -113,9 +113,9 @@ namespace CTCI
         static TreeNode successor(TreeNode node) {
             if (node == null) return null;
             if (node.children[1] != null) {
-                node = node.right;
+                node = node.children[1];
                 while(node.children[0] != null) {
-                    node = node.left;
+                    node = node.children[0];
                 }
                 return node;
             }
@@ -124,5 +124,43 @@ namespace CTCI
             }
             return node;
         }
+
+        /* Build Order: You are given a list of projects and a list of dependencies (which is a list of pairs of 
+        projects, where the second project is dependent on the first project). All of a project's dependencies 
+        must be built before the project is. Find a build order that will allow the projects to be built. If there 
+        is no valid build order, return an error. */
+        
+
+        /*First Common Ancestor: Design an algorithm and write code to find the first common ancestor 
+        of two nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not 
+        necessarily a binary search tree. */
+        static TreeNode firstCommonAncestor(TreeNode node1, TreeNode node2) {
+            if(node1 == null || node2 == null) return null;
+            TreeNode temp1 = node1;
+            TreeNode temp2 = node2;
+            int l1 = 0;
+            int l2 = 0;
+            while (temp1.parent != null) {
+                temp1 = temp1.parent;
+                l1++;
+            }
+            while (temp2.parent != null) {
+                temp2 = temp2.parent;
+                l2++;
+            }
+            int diff = Math.Abs(l1-l2);
+            temp1 = l1 > l2 ? node1 : node2;
+            temp2 = l1 > l2 ? node2: node1;
+            for (int i = 0; i < diff; i++) {
+                temp2 = temp2.parent;
+            }
+            while (temp1 != temp2 && temp1 != null && temp2 != null) {
+                temp1 = temp1.parent;
+                temp2 = temp2.parent;
+            }
+            return temp1;
+        }
+
+        
     }
 }
