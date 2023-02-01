@@ -161,6 +161,33 @@ namespace CTCI
             return temp1;
         }
 
+        /* Check Subtree: Tl and T2 are two very large binary trees, with Tl much bigger than T2. Create an 
+        algorithm to determine ifT2 is a subtree of Tl. 
+        A tree T2 is a subtree of Tl if there exists a node n in Tl such that the subtree of n is identical to T2. 
+        That is, if you cut off the tree at node n, the two trees would be identical. */
+        static bool checkSubtree(TreeNode node1, TreeNode node2) {
+            if (node2 == null) return true;
+            return checkSubtreeHelper(node1,node2);
+        }
+
+        static bool checkSubtreeHelper(TreeNode node1, TreeNode node2) {
+            if (node1 == null) return false;
+            if (node1.value == node2.value && matchTree(node1,node2)) {
+                return true;
+            }
+            return (checkSubtreeHelper(node1.children[0],node2) || checkSubtreeHelper(node1.children[1],node2));
+        }
+
+        static bool matchTree(TreeNode node1, TreeNode node2) {
+            if (node1 == null && node2 == null) return true;
+            if (node1 == null || node2 != null) return false;
+            if (node1.value != node2.value) return false;
+            return (matchTree(node1.children[0],node2.children[0]) && matchTree(node1.children[1],node2.children[1]));
+        }
+
+
+        
+
         
     }
 }
