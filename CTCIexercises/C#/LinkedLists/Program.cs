@@ -175,10 +175,10 @@ namespace CTCI
         static ListNode loopDetection(ListNode head) {
             if (head == null) return null;
             ListNode slow = head;
-            ListNode runner = head;
+            ListNode runner = head.next;
             while (slow != runner && runner != null && runner.next != null) {
                 slow = slow.next;
-                runner = runner.next;
+                runner = runner.next.next;
             }
             if (runner == null || runner.next == null) return null;
             runner = head;
