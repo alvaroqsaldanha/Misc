@@ -44,10 +44,20 @@ namespace CTCI
             return grid[rows,cols];
         }
 
-        /* Magic Index: A magic index in an array A[ 1 .•. n-1] is defined to be an index such that A[ i] 
-        i. Given a sorted array of distinct integers, write a method to find a magic index, if one exists, in
-        array A. */
-        
+        /* Power Set: Write a method to return all subsets of a set. */
+        static List<List<char>> powerSet(char[] set) {
+            List<List<char>> results = new List<List<char>>();
+            results.Add(new List<char>());
+            for (int i = 0; i < set.Length; i++) {
+                foreach (List<char> result in results) {
+                    List<char> newList = new List<char>(result);
+                    newList.Add(set[i]);
+                    results.Add(newList);
+                }
+            }
+            return results;
+        }
+
 
 
 
