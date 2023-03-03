@@ -180,6 +180,42 @@ namespace CTCI
             string concat = s1 + s2;
             return concat.Contains(s1);
         }
+
+        /* Search in rotated array */
+        public int Search(int[] nums, int target) {
+            if (nums.Length == 0) return -1;
+            int l = 0;
+            int r = nums.Length - 1;
+            int minidx = 0;
+            int min = Int32.MaxValue;
+            while (l <= r) {
+                int middle = (l + r) / 2;
+                if (nums[middle] < min) {
+                    min = nums[middle];
+                    minidx = middle;
+                }
+                if (nums[middle] > nums[r]) {
+                    l = middle + 1;
+                }
+                else {
+                    r = middle - 1;
+                }
+            }
+            l = 0;
+            r = nums.Length - 1;
+            while (l <= r) {
+                int middle = (l + r) / 2;
+                int realmiddle = (middle + minidx) % nums.Length;
+                if (nums[realmiddle] == target) return realmiddle;
+                if (nums[realmiddle] < target) {
+                    l = middle + 1;
+                }
+                else {
+                    r = middle - 1;
+                }
+            }       
+            return -1;
+        }
     }
 
 }
