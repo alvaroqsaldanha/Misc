@@ -216,6 +216,21 @@ namespace CTCI
             }       
             return -1;
         }
+
+        /* Container with the most water */
+        public int MaxArea(int[] height) {
+            if (height.Length < 2) return 0;
+            if (height.Length == 2) return Math.Min(height[0],height[1]) * 1;
+            int max = Int32.MinValue;
+            int i = 0;
+            int j = height.Length - 1;
+            while (i != j) {
+                    max = Math.Max(max,(j-i)*Math.Min(height[i],height[j]));
+                    if (height[i] < height[j]) i++;
+                    else j--;
+            }
+            return max;
+        }
     }
 
 }
