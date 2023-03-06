@@ -231,6 +231,44 @@ namespace CTCI
             }
             return max;
         }
+
+        /* Word Search */
+        public bool Exist(char[][] board, string word) {
+            if (board.Length == 0 || word.Length == 0) return false;
+            for (int i = 0; i < board.Length; i++) {
+                for(int j = 0; j < board[0].Length; j++) {
+                    HashSet<string> path = new HashSet<string>();
+                    if (dfs(board,i,j,word,0,path)) return true;
+                }
+            }
+            return false;
+        }
+
+        public List<string> getNeighbours(int n, int m, int i, int j) {
+            List<string> nb = new List<string>();
+            if (i < n) nb.Add((i+1).ToString() + j.ToString());
+            if (i > 0) nb.Add((i-1).ToString() + j.ToString());
+            if (j > 0) nb.Add(i.ToString() + (j-1).ToString());
+            if (j < m) nb.Add(i.ToString() + (j+1).ToString());
+            return nb;
+        }
+
+        public bool dfs(char[][] board, int i, int j, string word, int idx, HashSet<string> path) {
+            if (idx == word.Length || (idx == word.Length - 1 && word[idx] == board[i][j])) {
+                return true;
+            } 
+            if (board[i][j] != word[idx]) return false;
+            string save = i.ToString() + j.ToString();
+            path.Add(save);
+            List<string> nb = getNeighbours(board.Length - 1,board[0].Length - 1,i,j);
+            foreach (string l in nb) {
+                if (!path.Contains(l)) {
+                    if (dfs(board,(int)Char.GetNumericValue(l[0]),(int)Char.GetNumericValue(l[1]),word,idx+1,path)) return true;
+                }
+            }
+            path.Remove(save);
+            return false;
+        }
     }
 
 }
