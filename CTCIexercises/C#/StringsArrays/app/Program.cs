@@ -269,6 +269,32 @@ namespace CTCI
             path.Remove(save);
             return false;
         }
+        
+        /* Longest Palindromic Substring */
+        public string LongestPalindrome(string s) {
+            if (s.Length == 0) return "";
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i < s.Length; i++) {
+                int opt1 = getMaxPalindromeSize(s,i,i);
+                int opt2 = getMaxPalindromeSize(s,i,i+1);
+                int len = Math.Max(opt1, opt2);
+                if (len > end - start) {
+                    start = i - (len - 1) / 2;
+                    end = i + len / 2;
+                }        
+            }
+            return s.Substring(start,end + 1 - start);
+        }
+
+        public int getMaxPalindromeSize(string s, int l ,int r) {
+            int size = 0;
+            while (l >= 0 && r < s.Length && s[l] == s[r]) {
+                l--;
+                r++;
+            }
+            return (r - l - 1);
+        }
     }
 
 }
