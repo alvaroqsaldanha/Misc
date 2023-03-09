@@ -269,6 +269,67 @@ namespace CTCI
             path.Remove(save);
             return false;
         }
+        
+        /* Longest Palindromic Substring */
+        public string LongestPalindrome(string s) {
+            if (s.Length == 0) return "";
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i < s.Length; i++) {
+                int opt1 = getMaxPalindromeSize(s,i,i);
+                int opt2 = getMaxPalindromeSize(s,i,i+1);
+                int len = Math.Max(opt1, opt2);
+                if (len > end - start) {
+                    start = i - (len - 1) / 2;
+                    end = i + len / 2;
+                }        
+            }
+            return s.Substring(start,end + 1 - start);
+        }
+
+        public int getMaxPalindromeSize(string s, int l ,int r) {
+            int size = 0;
+            while (l >= 0 && r < s.Length && s[l] == s[r]) {
+                l--;
+                r++;
+            }
+            return (r - l - 1);
+        }
+        
+        /* Letter Combinations of a Phone Number */ 
+        public IList<string> LetterCombinations(string digits) {
+            IList<string> results = new List<string>();
+            if (digits.Length == 0) return results;
+            results.Add("");
+            Dictionary<char,string> phone = new Dictionary<char,string>();
+            BuildDict(phone);
+            return LetterCombinations(digits, 0, phone, results);
+        }
+
+        public IList<string> LetterCombinations(string digits, int idx, Dictionary<char,string> phone, IList<string> results) {
+            if (idx == digits.Length) return results;
+            char curr_digit = digits[idx];
+            IList<string> new_results = new List<string>();
+            foreach (string result in results) {
+                for (int i = 0; i < phone[curr_digit].Length; i++) {
+                    string temp = string.Copy(result);
+                    temp += phone[curr_digit][i];
+                    new_results.Add(temp);
+                }
+            }
+            return LetterCombinations(digits, idx+1, phone, new_results);
+        }
+
+        public void BuildDict(Dictionary<char,string> phone) {
+            phone.Add('2',"abc");
+            phone.Add('3',"def");
+            phone.Add('4',"ghi");
+            phone.Add('5',"jlk");
+            phone.Add('6',"mno");
+            phone.Add('7',"pqrs");
+            phone.Add('8',"tuv");
+            phone.Add('9',"wxyz");
+        }
     }
 
 }
