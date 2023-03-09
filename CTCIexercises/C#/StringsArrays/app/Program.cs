@@ -295,6 +295,41 @@ namespace CTCI
             }
             return (r - l - 1);
         }
+        
+        /* Letter Combinations of a Phone Number */ 
+        public IList<string> LetterCombinations(string digits) {
+            IList<string> results = new List<string>();
+            if (digits.Length == 0) return results;
+            results.Add("");
+            Dictionary<char,string> phone = new Dictionary<char,string>();
+            BuildDict(phone);
+            return LetterCombinations(digits, 0, phone, results);
+        }
+
+        public IList<string> LetterCombinations(string digits, int idx, Dictionary<char,string> phone, IList<string> results) {
+            if (idx == digits.Length) return results;
+            char curr_digit = digits[idx];
+            IList<string> new_results = new List<string>();
+            foreach (string result in results) {
+                for (int i = 0; i < phone[curr_digit].Length; i++) {
+                    string temp = string.Copy(result);
+                    temp += phone[curr_digit][i];
+                    new_results.Add(temp);
+                }
+            }
+            return LetterCombinations(digits, idx+1, phone, new_results);
+        }
+
+        public void BuildDict(Dictionary<char,string> phone) {
+            phone.Add('2',"abc");
+            phone.Add('3',"def");
+            phone.Add('4',"ghi");
+            phone.Add('5',"jlk");
+            phone.Add('6',"mno");
+            phone.Add('7',"pqrs");
+            phone.Add('8',"tuv");
+            phone.Add('9',"wxyz");
+        }
     }
 
 }
