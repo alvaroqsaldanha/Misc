@@ -330,6 +330,44 @@ namespace CTCI
             phone.Add('8',"tuv");
             phone.Add('9',"wxyz");
         }
+        
+        /* Group Anagrams */
+        public IList<IList<string>> GroupAnagrams(string[] strs) {
+            IList<IList<string>> results = new List<IList<string>>();
+            Dictionary<string,List<string>> map = new Dictionary<string,List<string>>();
+            if (strs.Length == 0) return results;
+            foreach (string str in strs) {
+                char[] ch = str.ToCharArray();
+                Array.Sort(ch);
+                string current = new string(ch);
+                if (map.ContainsKey(current)) map[current].Add(str);
+                else {
+                    List<string> a = new List<string>();
+                    a.Add(str);
+                    map.Add(current,a);
+                }
+            }
+            foreach (var (key, value) in map) {
+                results.Add(value);
+            }
+            return results;
+        }
+        
+        /* Product of self-array */
+        public int[] ProductExceptSelf(int[] nums) {
+            if (nums.Length == 0 || nums.Length == 1) return nums;
+            int[] results = new int[nums.Length];
+            results[0] = 1;
+            for (int i = 1; i < nums.Length; i++) {
+                results[i] = results[i-1] * nums[i-1];
+            }
+            int right = nums[nums.Length - 1];
+            for (int i = nums.Length - 2; i > -1; i--) {
+                results[i] *= right;
+                right *= nums[i];
+            }
+            return results;
+        }
     }
 
 }
