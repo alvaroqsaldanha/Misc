@@ -368,6 +368,44 @@ namespace CTCI
             }
             return results;
         }
+        
+        /* Evaluate Reverse Polish Notation */
+        public int EvalRPN(string[] tokens) {
+            if (tokens.Length == 0) return -1;
+            Stack<int> nums = new Stack<int>();
+            HashSet<string> ops = new HashSet<string> {"+","-","*","/"};
+            foreach (string token in tokens) {
+                if (ops.Contains(token)) {
+                    int val = nums.Pop();
+                    switch (token) {
+                        case "+":
+                            nums.Push(val+nums.Pop());
+                            break;
+                        case "-":
+                            val = nums.Pop() - val;
+                            nums.Push(val);
+                            break;
+                        case "*":
+                            nums.Push(val*nums.Pop());
+                            break;
+                        case "/":
+                            val = nums.Pop() / val;
+                            nums.Push(val);
+                            break;
+                    }
+                }
+                else {
+                    int i = token[0] == '-' ? 1 : 0;
+                    int num = 0;
+                    for (; i < token.Length; i++) {
+                        num = num * 10 + (token[i] - '0');
+                    }
+                    num = token[0] == '-' ? -num : num;
+                    nums.Push(num);
+                }
+            }
+            return nums.Pop();
+        }
     }
 
 }
