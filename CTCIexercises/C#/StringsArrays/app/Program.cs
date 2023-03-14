@@ -406,6 +406,40 @@ namespace CTCI
             }
             return nums.Pop();
         }
+        
+        /* Calculate */
+        public int Calculate(string s) {
+            int currentNumber = 0;
+            Stack<int> toSum = new Stack<int>();
+            HashSet<char> operators = new HashSet<char>() {'+','-','*','/'};
+            char last_op = '+';
+            for (int i = 0; i < s.Length; i++) {
+                 if (!operators.Contains(s[i]) && s[i] != ' '){
+                    currentNumber = currentNumber * 10 + (s[i] - '0');
+                }
+                if (operators.Contains(s[i]) && s[i] != ' ' || i == s.Length - 1) {
+                    if (last_op == '+') {
+                        toSum.Push(currentNumber);
+                    }
+                    else if (last_op == '-') {
+                        toSum.Push(-currentNumber);
+                    }
+                    else if (last_op == '*') {
+                        toSum.Push(toSum.Pop()*currentNumber);
+                    }
+                    else if (last_op == '/') {
+                        toSum.Push(toSum.Pop()/currentNumber);
+                    }
+                    last_op = s[i];
+                    currentNumber = 0;
+                }
+            }
+            int result = 0;
+            while (toSum.Count != 0) {
+                result += toSum.Pop();
+            }
+            return result;
+       }
     }
 
 }
