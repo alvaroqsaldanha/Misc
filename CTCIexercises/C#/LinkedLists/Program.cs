@@ -188,6 +188,22 @@ namespace CTCI
             }
             return slow;
         }
+        
+        /* OddEven Linked List */
+        public ListNode OddEvenList(ListNode head) {
+            if (head == null) return null;
+            ListNode odd = head;
+            ListNode even = head.next;
+            ListNode headEven = even;
+            while (even != null && even.next != null) {
+                odd.next = even.next;
+                even.next = odd.next.next;
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = headEven;
+            return head;
+        }
 
     }
 
