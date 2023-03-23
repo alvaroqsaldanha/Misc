@@ -8,3 +8,5 @@ A collection of miscellaneous projects, ranging from graph optimization and path
 ### [Binary Decision Tree from scratch with post-pruning](https://github.com/alvaroqsaldanha/Misc/tree/main/SupervisedLearningTree)
 ### [Maximum flow computation using Push Relabel in C](https://github.com/alvaroqsaldanha/Misc/tree/main/PushRelabel)
 ### [Simple inverted index for document relevance ranking](https://github.com/alvaroqsaldanha/Misc/tree/main/IRTextProcessing)
+### [Markov Chains and MDP](https://github.com/alvaroqsaldanha/Misc/tree/main/MarkovChains)
+
