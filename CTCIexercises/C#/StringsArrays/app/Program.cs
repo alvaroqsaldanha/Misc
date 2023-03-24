@@ -440,6 +440,20 @@ namespace CTCI
             }
             return result;
        }
+        
+       public int LengthOfLIS(int[] nums) {
+            int[] dp = new int[nums.Length];
+            int max = 0;
+            for (int i = 0; i < nums.Length; i++) {
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] > nums[j] && dp[j] + 1 > dp[i]) {
+                        dp[i] = dp[j] + 1;
+                        if (dp[i] > max) max = dp[i];
+                    }
+                }
+            }
+            return max + 1;
+        }
     }
 
 }
