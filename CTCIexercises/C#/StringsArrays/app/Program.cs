@@ -454,6 +454,67 @@ namespace CTCI
             }
             return max + 1;
         }
+        
+            public enum state {
+        UNVISITED, VISITING, VISITED
+    }
+
+    public class Node {
+
+        public int val;
+        public List<Node> adjs = new List<Node>();
+        public state state = state.UNVISITED;
+
+        public Node(int value) {
+            this.val = value;
+        }
+
+        public int getVal() {
+            return this.val;
+        }
+
+        public void addAdj(Node node) {
+            this.adjs.Add(node);
+        }
+
+        public List<Node> getAdjs() {
+            return this.adjs;
+        }
+    }
+
+    public bool CanFinish(int numCourses, int[][] prerequisites) {
+        Dictionary<int,Node> graph = new Dictionary<int,Node>();
+        for (int i = 0; i < prerequisites.Length; i++) {
+            if (!graph.ContainsKey(prerequisites[i][1])) {
+                graph.Add(prerequisites[i][1],new Node(prerequisites[i][1]));
+            }
+            if (!graph.ContainsKey(prerequisites[i][0])) {
+                graph.Add(prerequisites[i][0],new Node(prerequisites[i][0]));
+            }
+            graph[prerequisites[i][1]].addAdj(graph[prerequisites[i][0]]);
+        }
+
+        foreach (var (key,node) in graph) {
+            if (node.state == state.UNVISITED) {
+                if (!dfs(node)) return false;
+            }
+        }
+        return true;
+
+    }
+
+    public bool dfs(Node node) {
+        if (node.state == state.VISITING) return false;
+        if (node.state == state.UNVISITED){
+            node.state = state.VISITING;
+            foreach (Node child in node.getAdjs()) {
+                if (!dfs(child)) return false;;
+            }
+            node.state = state.VISITED;
+        }
+        
+        return true;
+    }
     }
 
 }
