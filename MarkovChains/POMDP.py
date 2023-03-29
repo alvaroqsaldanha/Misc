@@ -1,5 +1,3 @@
-
-
 import numpy as np
 
 def load_pomdp(filename, g):
@@ -9,8 +7,6 @@ def load_pomdp(filename, g):
 import numpy.random as rand
 
 M = load_pomdp('garbage-big.npz', 0.99)
-
-# Activity 2
 
 def gen_trajectory(pomdp,x0,n):
     states = [x0]
@@ -26,10 +22,6 @@ def gen_trajectory(pomdp,x0,n):
         observations.append(observation)
     return np.array(states), np.array(actions), np.array(observations)
 
-
-
-# Activity 3
-
 def belief_update(pomdp,curr_belief,action,obs):
     new_belief = curr_belief.dot(pomdp[3][action]).dot(np.diag(pomdp[4][a][:, obs]))
     return new_belief / new_belief.sum()
@@ -43,8 +35,6 @@ def sample_beliefs(pomdp,n):
         if all(np.linalg.norm(b-curr_belief) > 1e-3 for b in beliefs):
             beliefs.append(curr_belief)
     return tuple(beliefs)
-    
-# Activity 4
 
 def solve_mdp(pomdp):
     Q = np.zeros((len(pomdp[0]), len(pomdp[1])))
@@ -57,7 +47,6 @@ def solve_mdp(pomdp):
         curr_error = np.linalg.norm(Q - prevQ)
     return Q
 
-# Activity 5
 def get_heuristic_action(b, Q, h):
     Qmin = np.min(Q, axis=1, keepdims=True)
     Pi = np.isclose(Q, Qmin, atol=1e-8, rtol=1e-8).astype(int) 
@@ -69,9 +58,6 @@ def get_heuristic_action(b, Q, h):
     elif h == "q-mdp":
         return rand.choice(np.flatnonzero(b.dot(Q) == b.dot(Q).min()))
 
-
-# Activity 6
- 
 def solve_fib(pomdp):
     Q = np.zeros((len(pomdp[0]), len(pomdp[1])))
     curr_error = 1
@@ -84,10 +70,3 @@ def solve_fib(pomdp):
         Q = pomdp[5] + pomdp[6] * Q
         curr_error = np.linalg.norm(Q-Q_prev)
     return Q
- 
-# All the beliefs are approximately uniform, which means that there is no strong preference for any particular state.
-# In most cases, the agents take the same action, which is moving down, regardless of the heuristic. This suggests that in this case, the chosen heuristic should not impact
-# performance significantly.
-
-
-
