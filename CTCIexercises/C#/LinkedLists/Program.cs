@@ -204,6 +204,32 @@ namespace CTCI
             odd.next = headEven;
             return head;
         }
+        
+        public class Count {
+             public int counter = 0;
+        }
+
+    public int KthSmallest(TreeNode root, int k) {
+        if (root == null || k == 0) return 0;
+        return inorder(root,k,new Count());
+    }
+
+    public int inorder(TreeNode node, int k, Count counter) {
+        if (node == null) return 0;
+        int left = inorder(node.left,k,counter);
+        if (counter.counter == k) {
+            return left;
+        }
+        counter.counter++;
+        if (counter.counter == k) {
+            return node.val;
+        }
+        int right = inorder(node.right,k,counter);
+        if (counter.counter == k) {
+            return right;
+        }
+        return 0;
+    }
 
     }
 
