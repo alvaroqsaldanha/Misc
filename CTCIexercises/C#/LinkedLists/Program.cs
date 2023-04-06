@@ -232,5 +232,82 @@ namespace CTCI
     }
 
     }
+    
+    public class DLinkedListNode {
+    public DLinkedListNode next;
+    public DLinkedListNode prev;
+    public int val;
+    public int key;
+
+    public DLinkedListNode(DLinkedListNode next, DLinkedListNode prev, int val, int key) {
+        this.next = next;
+        this.prev = prev;
+        this.val = val;
+        this.key = key;
+    }
+}
+
+public class LRUCache {
+
+    Dictionary<int,DLinkedListNode> cache = new Dictionary<int,DLinkedListNode>();
+    DLinkedListNode head;
+    DLinkedListNode tail;
+    int capacity = 0;
+    int count = 0;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void moveToHead(DLinkedListNode temp) {
+        if (this.head == null) this.head = temp;
+        if (temp == this.head) return;
+        temp.prev.next = temp.next;
+        if (temp == tail) {
+            tail = temp.prev;
+        }
+        else {
+            temp.next.prev = temp.prev;
+        }
+        temp.next = head;
+        head.prev = temp;
+        temp.prev = null;
+        head = temp;
+    }
+    
+    public int Get(int key) {
+        if (cache.Count == 0) return -1;
+        if (!cache.ContainsKey(key)) return -1;
+        DLinkedListNode temp = cache[key];
+        moveToHead(temp);
+        return cache[key].val;
+    }
+    
+    public void Put(int key, int value) {
+        if (cache.ContainsKey(key)) {
+            cache[key].val = value;
+            DLinkedListNode temp = cache[key];
+            moveToHead(temp);
+            return;
+        }
+        DLinkedListNode node = new DLinkedListNode(this.head,null,value,key);
+        if (head != null) {
+            head.prev = node;
+        }
+        if (tail == null) {
+            tail = node;
+        }
+        head = node;
+        if (this.count < this.capacity) {
+            this.count++;
+        }
+        else {
+            cache.Remove(tail.key);
+            tail = tail.prev;
+            tail.next = null;
+        }
+        cache.Add(key,node);
+    }
+}
 
 }
