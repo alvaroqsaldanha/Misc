@@ -1,1 +1,1 @@
-A simple inverted-index implementation for text processing, using nltk and sklearn. 
+A simple inverted-index implementation for text processing, using Python's nltk and scikit-learn. 
