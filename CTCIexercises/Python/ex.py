@@ -44,4 +44,17 @@ def uniquePaths(self, m: int, n: int) -> int:
             dp[i][j] = dp[i-1][j] + dp[i][j-1]
     return dp[m][n]
 
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        result = []
+        self.search(root,result,0)
+        return result
+
+    def search(self,root,result,depth):
+        if root == None:
+            return
+        if depth == len(result):
+            result.append(root.val)
+        self.search(root.right,result,depth+1)
+        self.search(root.left,result,depth+1)
+
 
