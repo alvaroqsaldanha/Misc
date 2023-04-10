@@ -35,5 +35,26 @@ def urlify(str,l):
             curr_replace -= 3
     print(''.join(str))
 
+# Unique Paths
+def uniquePaths(self, m: int, n: int) -> int:
+    dp = [[0] * (n + 1)] * (m+ 1)
+    dp[0][1] = 1
+    for i in range(1,m + 1):
+        for j in range(1,n + 1):
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    return dp[m][n]
+
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        result = []
+        self.search(root,result,0)
+        return result
+
+    def search(self,root,result,depth):
+        if root == None:
+            return
+        if depth == len(result):
+            result.append(root.val)
+        self.search(root.right,result,depth+1)
+        self.search(root.left,result,depth+1)
 
 

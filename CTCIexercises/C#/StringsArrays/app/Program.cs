@@ -330,6 +330,191 @@ namespace CTCI
             phone.Add('8',"tuv");
             phone.Add('9',"wxyz");
         }
+        
+        /* Group Anagrams */
+        public IList<IList<string>> GroupAnagrams(string[] strs) {
+            IList<IList<string>> results = new List<IList<string>>();
+            Dictionary<string,List<string>> map = new Dictionary<string,List<string>>();
+            if (strs.Length == 0) return results;
+            foreach (string str in strs) {
+                char[] ch = str.ToCharArray();
+                Array.Sort(ch);
+                string current = new string(ch);
+                if (map.ContainsKey(current)) map[current].Add(str);
+                else {
+                    List<string> a = new List<string>();
+                    a.Add(str);
+                    map.Add(current,a);
+                }
+            }
+            foreach (var (key, value) in map) {
+                results.Add(value);
+            }
+            return results;
+        }
+        
+        /* Product of self-array */
+        public int[] ProductExceptSelf(int[] nums) {
+            if (nums.Length == 0 || nums.Length == 1) return nums;
+            int[] results = new int[nums.Length];
+            results[0] = 1;
+            for (int i = 1; i < nums.Length; i++) {
+                results[i] = results[i-1] * nums[i-1];
+            }
+            int right = nums[nums.Length - 1];
+            for (int i = nums.Length - 2; i > -1; i--) {
+                results[i] *= right;
+                right *= nums[i];
+            }
+            return results;
+        }
+        
+        /* Evaluate Reverse Polish Notation */
+        public int EvalRPN(string[] tokens) {
+            if (tokens.Length == 0) return -1;
+            Stack<int> nums = new Stack<int>();
+            HashSet<string> ops = new HashSet<string> {"+","-","*","/"};
+            foreach (string token in tokens) {
+                if (ops.Contains(token)) {
+                    int val = nums.Pop();
+                    switch (token) {
+                        case "+":
+                            nums.Push(val+nums.Pop());
+                            break;
+                        case "-":
+                            val = nums.Pop() - val;
+                            nums.Push(val);
+                            break;
+                        case "*":
+                            nums.Push(val*nums.Pop());
+                            break;
+                        case "/":
+                            val = nums.Pop() / val;
+                            nums.Push(val);
+                            break;
+                    }
+                }
+                else {
+                    int i = token[0] == '-' ? 1 : 0;
+                    int num = 0;
+                    for (; i < token.Length; i++) {
+                        num = num * 10 + (token[i] - '0');
+                    }
+                    num = token[0] == '-' ? -num : num;
+                    nums.Push(num);
+                }
+            }
+            return nums.Pop();
+        }
+        
+        /* Calculate */
+        public int Calculate(string s) {
+            int currentNumber = 0;
+            Stack<int> toSum = new Stack<int>();
+            HashSet<char> operators = new HashSet<char>() {'+','-','*','/'};
+            char last_op = '+';
+            for (int i = 0; i < s.Length; i++) {
+                 if (!operators.Contains(s[i]) && s[i] != ' '){
+                    currentNumber = currentNumber * 10 + (s[i] - '0');
+                }
+                if (operators.Contains(s[i]) && s[i] != ' ' || i == s.Length - 1) {
+                    if (last_op == '+') {
+                        toSum.Push(currentNumber);
+                    }
+                    else if (last_op == '-') {
+                        toSum.Push(-currentNumber);
+                    }
+                    else if (last_op == '*') {
+                        toSum.Push(toSum.Pop()*currentNumber);
+                    }
+                    else if (last_op == '/') {
+                        toSum.Push(toSum.Pop()/currentNumber);
+                    }
+                    last_op = s[i];
+                    currentNumber = 0;
+                }
+            }
+            int result = 0;
+            while (toSum.Count != 0) {
+                result += toSum.Pop();
+            }
+            return result;
+       }
+        
+       public int LengthOfLIS(int[] nums) {
+            int[] dp = new int[nums.Length];
+            int max = 0;
+            for (int i = 0; i < nums.Length; i++) {
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] > nums[j] && dp[j] + 1 > dp[i]) {
+                        dp[i] = dp[j] + 1;
+                        if (dp[i] > max) max = dp[i];
+                    }
+                }
+            }
+            return max + 1;
+        }
+        
+            public enum state {
+        UNVISITED, VISITING, VISITED
+    }
+
+    public class Node {
+
+        public int val;
+        public List<Node> adjs = new List<Node>();
+        public state state = state.UNVISITED;
+
+        public Node(int value) {
+            this.val = value;
+        }
+
+        public int getVal() {
+            return this.val;
+        }
+
+        public void addAdj(Node node) {
+            this.adjs.Add(node);
+        }
+
+        public List<Node> getAdjs() {
+            return this.adjs;
+        }
+    }
+
+    public bool CanFinish(int numCourses, int[][] prerequisites) {
+        Dictionary<int,Node> graph = new Dictionary<int,Node>();
+        for (int i = 0; i < prerequisites.Length; i++) {
+            if (!graph.ContainsKey(prerequisites[i][1])) {
+                graph.Add(prerequisites[i][1],new Node(prerequisites[i][1]));
+            }
+            if (!graph.ContainsKey(prerequisites[i][0])) {
+                graph.Add(prerequisites[i][0],new Node(prerequisites[i][0]));
+            }
+            graph[prerequisites[i][1]].addAdj(graph[prerequisites[i][0]]);
+        }
+
+        foreach (var (key,node) in graph) {
+            if (node.state == state.UNVISITED) {
+                if (!dfs(node)) return false;
+            }
+        }
+        return true;
+
+    }
+
+    public bool dfs(Node node) {
+        if (node.state == state.VISITING) return false;
+        if (node.state == state.UNVISITED){
+            node.state = state.VISITING;
+            foreach (Node child in node.getAdjs()) {
+                if (!dfs(child)) return false;;
+            }
+            node.state = state.VISITED;
+        }
+        
+        return true;
+    }
     }
 
 }

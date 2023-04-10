@@ -188,7 +188,126 @@ namespace CTCI
             }
             return slow;
         }
+        
+        /* OddEven Linked List */
+        public ListNode OddEvenList(ListNode head) {
+            if (head == null) return null;
+            ListNode odd = head;
+            ListNode even = head.next;
+            ListNode headEven = even;
+            while (even != null && even.next != null) {
+                odd.next = even.next;
+                even.next = odd.next.next;
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = headEven;
+            return head;
+        }
+        
+        public class Count {
+             public int counter = 0;
+        }
+
+    public int KthSmallest(TreeNode root, int k) {
+        if (root == null || k == 0) return 0;
+        return inorder(root,k,new Count());
+    }
+
+    public int inorder(TreeNode node, int k, Count counter) {
+        if (node == null) return 0;
+        int left = inorder(node.left,k,counter);
+        if (counter.counter == k) {
+            return left;
+        }
+        counter.counter++;
+        if (counter.counter == k) {
+            return node.val;
+        }
+        int right = inorder(node.right,k,counter);
+        if (counter.counter == k) {
+            return right;
+        }
+        return 0;
+    }
 
     }
+    
+    public class DLinkedListNode {
+    public DLinkedListNode next;
+    public DLinkedListNode prev;
+    public int val;
+    public int key;
+
+    public DLinkedListNode(DLinkedListNode next, DLinkedListNode prev, int val, int key) {
+        this.next = next;
+        this.prev = prev;
+        this.val = val;
+        this.key = key;
+    }
+}
+
+public class LRUCache {
+
+    Dictionary<int,DLinkedListNode> cache = new Dictionary<int,DLinkedListNode>();
+    DLinkedListNode head;
+    DLinkedListNode tail;
+    int capacity = 0;
+    int count = 0;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void moveToHead(DLinkedListNode temp) {
+        if (this.head == null) this.head = temp;
+        if (temp == this.head) return;
+        temp.prev.next = temp.next;
+        if (temp == tail) {
+            tail = temp.prev;
+        }
+        else {
+            temp.next.prev = temp.prev;
+        }
+        temp.next = head;
+        head.prev = temp;
+        temp.prev = null;
+        head = temp;
+    }
+    
+    public int Get(int key) {
+        if (cache.Count == 0) return -1;
+        if (!cache.ContainsKey(key)) return -1;
+        DLinkedListNode temp = cache[key];
+        moveToHead(temp);
+        return cache[key].val;
+    }
+    
+    public void Put(int key, int value) {
+        if (cache.ContainsKey(key)) {
+            cache[key].val = value;
+            DLinkedListNode temp = cache[key];
+            moveToHead(temp);
+            return;
+        }
+        DLinkedListNode node = new DLinkedListNode(this.head,null,value,key);
+        if (head != null) {
+            head.prev = node;
+        }
+        if (tail == null) {
+            tail = node;
+        }
+        head = node;
+        if (this.count < this.capacity) {
+            this.count++;
+        }
+        else {
+            cache.Remove(tail.key);
+            tail = tail.prev;
+            tail.next = null;
+        }
+        cache.Add(key,node);
+    }
+}
 
 }
