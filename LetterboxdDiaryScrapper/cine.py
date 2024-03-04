@@ -27,6 +27,5 @@ url_list = [
     "https://www.unitedcinemas.jp/ygc/film.php"
 ]
 
-# Open each URL in a new tab
 for url in url_list:
     webbrowser.open_new_tab(url)
