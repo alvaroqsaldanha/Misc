@@ -1,13 +1,13 @@
 const API_TOKEN = '';
 
-const fetchImageCaption = async (imageUri, model) => {
+const fetchImageCaption = async (imageData, model) => {
     try {
         const response = await fetch(
             model,
             {
                 headers: { Authorization: `Bearer ${API_TOKEN}` },
                 method: "POST",
-                body: imageUri,
+                body: imageData,
             }
         );
         if (response.status !== 200) {
