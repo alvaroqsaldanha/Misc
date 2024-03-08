@@ -43,7 +43,7 @@ or, if using Monaca, use Monaca cloud.
 
 ## Blogpost
 
-Read a blogpost about this application [here]().
+Read a blogpost about this application COMING SOON.
 
 ## App structure and additional information
 
