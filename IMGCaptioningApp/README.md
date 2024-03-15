@@ -43,7 +43,7 @@ or, if using Monaca, use Monaca cloud.
 
 ## Blogpost
 
-Read a blogpost about this application COMING SOON.
+Read a blogpost about this application [here](https://medium.com/the-web-tub/making-a-simple-image-captioning-app-w-monaca-capacitor-reactjs-and-hugging-face-4eb9f9c0fbfd).
 
 ## App structure and additional information
 
