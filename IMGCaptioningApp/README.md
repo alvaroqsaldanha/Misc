@@ -47,4 +47,4 @@ Read a blogpost about this application [here](https://medium.com/the-web-tub/mak
 
 ## App structure and additional information
 
-The app consists of two simple main screens: menu and settings. The menu allows the user to caption images either by taking a picture with the camera, or by selecting a previously existing image from the device's gallery. Additionally, there is a third option for navigating and managing the device's previous caption history. The settings allow for the user to choose the Hugging Face model to use, as well as toggle dark mode.
+The app consists of three simple main screens: menu, caption history, and settings. The menu allows for the user to caption images either by taking a picture with the camera, or by selecting a previously existing image from the device's gallery. The caption history is for navigating and managing the device's previous captions, providing the option to reset previously saved data. The settings allows the user to choose the Hugging Face model to use, as well as toggle dark mode.
